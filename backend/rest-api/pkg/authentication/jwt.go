@@ -2,6 +2,7 @@ package authentication
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/nealarch01/payaco/pkg/models"
@@ -11,10 +12,12 @@ import (
 
 func CreateToken(accountID int) string {
 	// Create claims
-	claims := jwt.MapClaims{
-		"id":       accountID,
-		"issuedAt": utilities.CurrentDateTime(),
-	}
+	// Create claims with the account ID, iat, and exp
+	claims := jwt.MapClaims{}
+	claims["id"] = accountID
+	claims["iat"] = jwt.NewNumericDate(time.Now())
+	// expire after one month (30 days)
+	claims["exp"] = jwt.NewNumericDate(time.Now().Add(time.Hour * 24 * 30))
 	// Add claims to token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	// Sign token
@@ -60,11 +63,25 @@ func BlacklistToken(tokenString string) error {
 	if connection == nil {
 		return fmt.Errorf("database connection failed")
 	}
-
-	_, err := connection.Exec("INSERT INTO blacklist (token) VALUES ($1)", tokenString)
+	currentDateTime := utilities.CurrentDateTime()
+	_, err := connection.Exec("INSERT INTO blacklist (token, created_at) VALUES ($1, $2)", tokenString, currentDateTime)
 	if err != nil {
 		return err
 	}
 	return nil
+}
+
+func GetIdFromToken(tokenString string) *int {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("there was an error decoding the token")
+		}
+		return []byte("secret"), nil
+	})
+	if err != nil {
+		return nil 
+	}
+	userID := token.Claims.(jwt.MapClaims)["id"]
+	return userID.(*int)
 }
 
