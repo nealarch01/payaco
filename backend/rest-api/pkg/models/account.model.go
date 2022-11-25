@@ -45,6 +45,50 @@ func GetAccountByID(id int) (Account, error) {
 	return account, nil
 }
 
+
+func GetAccountByEmail(email string) (Account, error) {
+	var account Account
+	db := InitConnection()
+	if db == nil {
+		return account, fmt.Errorf("database connection failed")
+	}
+
+	err := db.QueryRow("SELECT * FROM account WHERE email = $1", email).Scan(&account.Id, &account.Username, &account.FirstName, &account.LastName, &account.PhoneNumber, &account.Email, &account.Password, &account.Balance)
+	if err != nil {
+		fmt.Println(err)
+		return account, err
+	}
+
+	return account, nil
+}
+
+func SearchUsername(username string) ([]Account, error) {
+	db := InitConnection()
+	if db == nil {
+		return nil, fmt.Errorf("database connection failed")
+	}
+
+	var accounts []Account
+	rows, err := db.Query("SELECT * FROM account WHERE username LIKE $1", username)
+	if err != nil {
+		print(err)
+		return nil, err
+	}
+
+	for rows.Next() {
+		var account Account
+		err = rows.Scan(&account.Id, &account.Username, &account.FirstName, &account.LastName, &account.PhoneNumber, &account.Email, &account.Password, &account.Balance)
+		if err != nil {
+			print(err)
+			return nil, err
+		}
+
+		accounts = append(accounts, account)
+	}
+
+	return accounts, nil
+}
+
 func VerifyLogin(userIdentifier string, password string) (*int, error) {
 	db := InitConnection()
 	if db == nil {
@@ -54,9 +98,9 @@ func VerifyLogin(userIdentifier string, password string) (*int, error) {
 	// Checks if an email or username exists
 	queryString := ""
 	if strings.Contains(userIdentifier, "@") {
-		queryString = "SELECT id FROM accounts WHERE email = $1 AND password = $2"
+		queryString = "SELECT id FROM account WHERE email = $1 AND password = $2"
 	} else {
-		queryString = "SELECT id FROM accounts WHERE username = $1 AND password = $2"
+		queryString = "SELECT id FROM account WHERE username = $1 AND password = $2"
 	}
 
 	var id *int = nil
@@ -78,9 +122,9 @@ func CheckAccountExists(userIdentifier string) (bool, error) {
 	// Checks if an email or username exists
 	queryString := ""
 	if strings.Contains(userIdentifier, "@") {
-		queryString = "SELECT COUNT(*) FROM accounts WHERE email = $1"
+		queryString = "SELECT COUNT(*) FROM account WHERE email = $1"
 	} else {
-		queryString = "SELECT COUNT(*) FROM accounts WHERE username = $1"
+		queryString = "SELECT COUNT(*) FROM account WHERE username = $1"
 	}
 
 	var count int
@@ -131,7 +175,7 @@ func AccountsCount() (int, error) {
 	}
 
 	var count int
-	err := db.QueryRow("SELECT COUNT(*) FROM accounts").Scan(&count)
+	err := db.QueryRow("SELECT COUNT(*) FROM account").Scan(&count)
 	if err != nil {
 		print(err)
 		return 0, err
