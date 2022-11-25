@@ -18,7 +18,7 @@ CREATE TABLE account (
 );
 
 
-insert into account (id, username, first_name, last_name, phone_number, email, password, balance) values (1, 'lharrington0', 'Lucky', 'Harrington', '+48-457-961-4950', 'lharrington0@ameblo.jp', 'fkVrJvFI', 168.58);
+insert into account (id, username, first_name, last_name, phone_number, email, password, balance) values (1, 'nealarch01', 'Neal', 'A', '+00-111-222-3333', 'nealarch01@gmail.com', 'abcd123', 168.58);
 insert into account (id, username, first_name, last_name, phone_number, email, password, balance) values (2, 'hoxnam1', 'Helenelizabeth', 'Oxnam', '+7-720-764-4230', 'hoxnam1@ovh.net', 'lzrAXBG', 283.57);
 insert into account (id, username, first_name, last_name, phone_number, email, password, balance) values (3, 'glemmers2', 'Gilberto', 'Lemmers', '+62-336-330-8967', 'glemmers2@issuu.com', 'NaAZeF', 208.88);
 insert into account (id, username, first_name, last_name, phone_number, email, password, balance) values (4, 'eboffin3', 'Ellynn', 'Boffin', '+62-697-566-2893', 'eboffin3@latimes.com', 'IhjbH4R', 206.95);
@@ -39,5 +39,6 @@ CREATE TABLE transactions (
 
 -- Table that blacklists jwt tokens
 CREATE TABLE blacklist (
-    token VARCHAR(500) NOT NULL PRIMARY KEY
+    token VARCHAR(500) NOT NULL PRIMARY KEY,
+    date_added TIMESTAMP NOT NULL
 );
