@@ -71,7 +71,7 @@ func BlacklistToken(tokenString string) error {
 	return nil
 }
 
-func GetIdFromToken(tokenString string) *int {
+func GetIdFromToken(tokenString string) int {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("there was an error decoding the token")
@@ -79,9 +79,13 @@ func GetIdFromToken(tokenString string) *int {
 		return []byte("secret"), nil
 	})
 	if err != nil {
-		return nil 
+		return -1
 	}
 	userID := token.Claims.(jwt.MapClaims)["id"]
-	return userID.(*int)
+	if userID == nil {
+		return -1
+	}
+	id := int(userID.(float64))
+	return id
 }
 
