@@ -1,4 +1,4 @@
-module github.com/nealarch01/payaco
+module github.com/nealarch01/payaco/rest-api
 
 go 1.17
 

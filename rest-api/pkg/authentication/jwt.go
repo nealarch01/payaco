@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
-	"github.com/nealarch01/payaco/pkg/models"
-	"github.com/nealarch01/payaco/pkg/utils"
+	"github.com/nealarch01/payaco/rest-api/pkg/models"
+	"github.com/nealarch01/payaco/rest-api/pkg/utils"
 )
 
 

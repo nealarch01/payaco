@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/nealarch01/payaco/pkg/authentication"
-	"github.com/nealarch01/payaco/pkg/models"
-	utilities "github.com/nealarch01/payaco/pkg/utils"
+	"github.com/nealarch01/payaco/rest-api/pkg/authentication"
+	"github.com/nealarch01/payaco/rest-api/pkg/models"
+	utilities "github.com/nealarch01/payaco/rest-api/pkg/utils"
 )
 
 func CreateTransaction(w http.ResponseWriter, r *http.Request) {

@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/nealarch01/payaco/pkg/controllers"
+	"github.com/nealarch01/payaco/rest-api/pkg/controllers"
 )
 
 func AccountRoutes(router *mux.Router) {

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/nealarch01/payaco/pkg/authentication"
+	"github.com/nealarch01/payaco/rest-api/pkg/authentication"
 )
 
 // Auth Middlware, checks if access token is valid

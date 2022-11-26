@@ -8,9 +8,9 @@ import (
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 
-	"github.com/nealarch01/payaco/pkg/middlewares"
-	"github.com/nealarch01/payaco/pkg/models"
-	"github.com/nealarch01/payaco/pkg/routes"
+	"github.com/nealarch01/payaco/rest-api/pkg/middlewares"
+	"github.com/nealarch01/payaco/rest-api/pkg/models"
+	"github.com/nealarch01/payaco/rest-api/pkg/routes"
 )
 
 func entryPoint(w http.ResponseWriter, _ *http.Request) {

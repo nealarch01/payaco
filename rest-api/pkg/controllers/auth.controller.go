@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/nealarch01/payaco/pkg/authentication"
-	"github.com/nealarch01/payaco/pkg/models"
+	"github.com/nealarch01/payaco/rest-api/pkg/authentication"
+	"github.com/nealarch01/payaco/rest-api/pkg/models"
 )
 
 func Login(w http.ResponseWriter, r *http.Request) {
