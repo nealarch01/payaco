@@ -205,8 +205,10 @@ Response:
 ---
 
 ### Useful Resources:
-- [GO Rest API youtube](https://youtu.be/jFfo23yIWac)
+- [Go Rest API youtube](https://youtu.be/jFfo23yIWac)
 - [Gorilla/Mux](https://github.com/gorilla/mux#middleware)
 - [Go database/sql documentation](https://pkg.go.dev/database/sql)
 - [GoJWT Documentation](https://pkg.go.dev/github.com/golang-jwt/jwt/v4)
 - [Storing currency PostgresSQL](https://stackoverflow.com/questions/15726535/which-datatype-should-be-used-for-currency)
+- [URL Params](https://stackoverflow.com/questions/46045756/retrieve-optional-query-variables-with-gorilla-mux)
+- [Middleware](https://www.turing.com/kb/building-middleware-for-node-js)
