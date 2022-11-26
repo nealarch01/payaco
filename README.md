@@ -133,7 +133,7 @@ Response:
 \ -- Content-Type: "x-www-form-urlencoded"
 					"email": "newemail@mail.com"
 {
-	"message": "Name successfully updated"
+	"message": "Email successfully updated"
 }
 ```
 
@@ -144,7 +144,7 @@ Response:
 \ -- Content-Type: "x-www-form-urlencoded"
 					"phone_number": "+1-123-456-7890"
 {
-	"message": "Name successfully updated"
+	"message": "Phone successfully updated"
 }
 ```
 
