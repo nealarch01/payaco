@@ -30,7 +30,7 @@
 ## Initializing the database
 - PostgreSQL Instance
   - Instance running at port 4323
-  - Instance
+  - Running ```./setup.sh``` will create a database named "development", tables, and some sample account data
 - Navigate into ```./backend/database``` and run ```./setup.sh```
   - Note: ```setup.sh``` uses zsh by default, make sure to change this if you use bash.
 
@@ -219,3 +219,4 @@ Response:
 - [Storing currency PostgresSQL](https://stackoverflow.com/questions/15726535/which-datatype-should-be-used-for-currency)
 - [URL Params](https://stackoverflow.com/questions/46045756/retrieve-optional-query-variables-with-gorilla-mux)
 - [Middleware](https://www.turing.com/kb/building-middleware-for-node-js)
+- [https://www.mockaroo.com](Sample data generator)
