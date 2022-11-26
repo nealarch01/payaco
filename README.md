@@ -46,6 +46,7 @@ Alternatively, you may use ```go run main.go```
 #### Additional Information:
 - The server does not use HTTPS
 - The default port (specified in main) is 8001
+- Most endpoints besides "/" will return application/json
 
 
 ---
@@ -140,7 +141,7 @@ Response:
 {
 	"account_id": 13,
 	"message": "Successfully registered",
-	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIwMTYyNDgsImlhdCI6MTY2OTQyNDI0OCwiaWQiOjEzfQ.LiGZYp_-2-6sWc5fuNEFvkpK_qqulL-KTNOm4CKNgA0"
+	"token": "ey.."
 }
 ```
 
@@ -219,4 +220,4 @@ Response:
 - [Storing currency PostgresSQL](https://stackoverflow.com/questions/15726535/which-datatype-should-be-used-for-currency)
 - [URL Params](https://stackoverflow.com/questions/46045756/retrieve-optional-query-variables-with-gorilla-mux)
 - [Middleware](https://www.turing.com/kb/building-middleware-for-node-js)
-- [https://www.mockaroo.com](Sample data generator)
+- [Sample data generator](https://www.mockaroo.com)
