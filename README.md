@@ -1,6 +1,6 @@
 # Backend
 
-### Disclaimer: Money used is not real
+### Disclaimer: This is all play/fake money!!
 
 
 # Table Of Contents:
