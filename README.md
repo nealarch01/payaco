@@ -53,7 +53,9 @@ Alternatively, you may use ```go run main.go```
 
 
 ## API Endpoints
+Note: More Endpoints will be added.
 ### Account (Public)
+
 **Get user information**
 ```
 /public/accounts/user/{id}
@@ -92,7 +94,7 @@ Response:
 
 ---
 
-### Account (Private)
+### Account (Secured)
 **Get account data (includes sensitive information)**
 ```
 /account/data
@@ -106,6 +108,55 @@ Response:
 	"id": 1,
 	"last_name": "A",
 	"username": "nealarch01"
+}
+```
+
+**Update Password**
+```
+/account/update/password
+\ -- Authorization: "token"
+\ -- Content-Type: "x-www-form-urlencoded"
+					"new_password": "super-secret2"
+					"old_password": "super-secret"
+
+Response:
+{
+	"message": "Password updated",
+	"token": "new_token"
+}
+```
+
+**Update Email**
+```
+/account/update/email
+\ -- Authorization: "token"
+\ -- Content-Type: "x-www-form-urlencoded"
+					"email": "newemail@mail.com"
+{
+	"message": "Name successfully updated"
+}
+```
+
+**Update Phone**
+```
+/account/update/phone
+\ -- Authorization: "token"
+\ -- Content-Type: "x-www-form-urlencoded"
+					"phone_number": "+1-123-456-7890"
+{
+	"message": "Name successfully updated"
+}
+```
+
+**Update Name**
+```
+/account/update/name
+\ -- Authorization: "token"
+\ -- Content-Type: "x-www-form-urlencoded"
+					"first_name": "FirstName"
+					"last_name": "LastName"
+{
+	"message": "Name successfully updated"
 }
 ```
 
