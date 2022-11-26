@@ -18,7 +18,6 @@ CREATE TABLE account (
 );
 
 
-insert into account (username, first_name, last_name, phone_number, email, password, balance) values ('nealarch01', 'Neal', 'A', '+00-111-222-3333', 'nealarch01@gmail.com', 'abcd123', 168.58);
 insert into account (username, first_name, last_name, phone_number, email, password, balance) values ('hoxnam1', 'Helenelizabeth', 'Oxnam', '+7-720-764-4230', 'hoxnam1@ovh.net', 'lzrAXBG', 283.57);
 insert into account (username, first_name, last_name, phone_number, email, password, balance) values ('glemmers2', 'Gilberto', 'Lemmers', '+62-336-330-8967', 'glemmers2@issuu.com', 'NaAZeF', 208.88);
 insert into account (username, first_name, last_name, phone_number, email, password, balance) values ('eboffin3', 'Ellynn', 'Boffin', '+62-697-566-2893', 'eboffin3@latimes.com', 'IhjbH4R', 206.95);
