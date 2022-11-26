@@ -69,14 +69,14 @@ func GetTransactionHistory(userID int) ([]Transaction, error) {
 	if db == nil {
 		return transactions, fmt.Errorf("database connection failed")
 	}
-	tempTransaction := Transaction{}
 	rows, err := db.Query("SELECT * FROM transactions WHERE sender = $1", userID)
 	if err != nil {
 		return transactions, err
 	}
 
+	tempTransaction := Transaction{}
 	for rows.Next() {
-		err := rows.Scan(&tempTransaction.Sender, &tempTransaction.Receiver, &tempTransaction.Amount)
+		err := rows.Scan(&tempTransaction.Id, &tempTransaction.Sender, &tempTransaction.Receiver, &tempTransaction.Amount)
 		if err != nil {
 			return transactions, err
 		}
