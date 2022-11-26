@@ -19,7 +19,7 @@ func GetPublicAccountData(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprint(w, `{"error": "id was not provided"}`)
+		fmt.Fprint(w, `{"message": "id was not provided"}`)
 		return
 	}
 
@@ -27,7 +27,7 @@ func GetPublicAccountData(w http.ResponseWriter, r *http.Request) {
 	account, err := models.GetAccountByID(id)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, `{"error": "Account does not exist"}`)
+		fmt.Fprint(w, `{"message": "Account does not exist"}`)
 		return
 	}
 
@@ -108,7 +108,7 @@ func SearchAccounts(w http.ResponseWriter, r *http.Request) {
 	}
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprint(w, `{"error": "Internal server error"}`)
+		fmt.Fprint(w, `{"message": "Internal server error"}`)
 		return
 	}
 
