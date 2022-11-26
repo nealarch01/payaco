@@ -46,11 +46,22 @@ func main() {
 	r.HandleFunc("/", entryPoint)        // Entry point, display an HTML page
 	r.Use(middlewares.LoggingMiddleware) // Middleware that logs all incoming requests.
 
-	authRoutes := r.PathPrefix("/api/auth").Subrouter()
+	authRoutes := r.PathPrefix("/auth").Subrouter()
 	routes.AuthRoutes(authRoutes)
 
-	accountRoutes := r.PathPrefix("/api/accounts").Subrouter()
-	routes.AccountRoutes(accountRoutes)
+	// Public routes
+	publicAccountRoutes := r.PathPrefix("/public/accounts").Subrouter() // Public routes, accessible to everyone
+	routes.AccountRoutes(publicAccountRoutes)
+
+	// Private routes
+	securedAccountRoutes := r.PathPrefix("/account").Subrouter() // Secured routes, accessible only to authenticated users
+	securedAccountRoutes.Use(middlewares.AuthenticationTokenValid)
+	routes.SecuredAccountRoutes(securedAccountRoutes)
+
+	// Private routes
+	transactionRoutes := r.PathPrefix("/transaction").Subrouter() // Secured routes, accessible only to authenticated users
+	transactionRoutes.Use(middlewares.AuthenticationTokenValid)
+	routes.TransactionRoutes(transactionRoutes)
 
 	fmt.Println("Server is running on port:", portNumber)
 	http.ListenAndServe(":"+strconv.Itoa(portNumber), r) // r is the Router
