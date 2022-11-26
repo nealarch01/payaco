@@ -43,6 +43,10 @@ A shell script <b>run.sh</b> was provided to compile and execute ```./run.sh```
 
 Alternatively, you may use ```go run main.go```
 
+#### Additional Information:
+- The server does not use HTTPS
+- The default port (specified in main) is 8001
+
 
 ---
 
