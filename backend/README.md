@@ -1,5 +1,7 @@
 # Backend
 
+### Disclaimer: Money used is not real
+
 
 # Table Of Contents:
 1. [Technology Stack](#techstack)
@@ -9,6 +11,7 @@
    - [Accounts](#account-public)
    - [Authentication](#authentication)
    - [Transactions](#transaction)
+5. [Useful Resources](#useful-resources)
 
 
 ---
