@@ -6,9 +6,8 @@ import (
 
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/nealarch01/payaco/rest-api/pkg/models"
-	"github.com/nealarch01/payaco/rest-api/pkg/utils"
+	utilities "github.com/nealarch01/payaco/rest-api/pkg/utils"
 )
-
 
 func CreateToken(accountID int) string {
 	// Create claims
@@ -64,7 +63,7 @@ func BlacklistToken(tokenString string) error {
 		return fmt.Errorf("database connection failed")
 	}
 	currentDateTime := utilities.CurrentDateTime()
-	_, err := connection.Exec("INSERT INTO blacklist (token, created_at) VALUES ($1, $2)", tokenString, currentDateTime)
+	_, err := connection.Exec("INSERT INTO blacklist (token, date_added) VALUES ($1, $2)", tokenString, currentDateTime)
 	if err != nil {
 		return err
 	}
@@ -88,4 +87,3 @@ func GetIdFromToken(tokenString string) int {
 	id := int(userID.(float64))
 	return id
 }
-
