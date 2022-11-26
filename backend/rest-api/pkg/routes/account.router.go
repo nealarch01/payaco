@@ -6,9 +6,11 @@ import (
 )
 
 func AccountRoutes(router *mux.Router) {
-	router.HandleFunc("/{id}", controllers.GetPublicAccountData).Methods("GET") // Get public user data by ID
+	router.HandleFunc("/user/{id}", controllers.GetPublicAccountData).Methods("GET") // Get public user data by ID
+	// Search query for users
+	router.HandleFunc("/search", controllers.SearchAccounts).Methods("GET")
 }
 
 func SecuredAccountRoutes(router *mux.Router) {
-	router.HandleFunc("/{id}", controllers.GetPrivateAccountData).Methods("GET") // Get private user data by ID
+	router.HandleFunc("/data", controllers.GetPrivateAccountData).Methods("GET") // Get private user data by ID
 }
