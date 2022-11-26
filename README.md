@@ -118,6 +118,7 @@ Response:
 		"user_identifier": "usernameOrEmail"
 		"password": "password"
 
+Response:
 {
 	"message": "Successfully logged in",
 	"token": "jwt"
@@ -135,6 +136,12 @@ Response:
 		"first_name": "firstName"
 		"last_name": "lastName"
 
+Response: 
+{
+	"account_id": 13,
+	"message": "Successfully registered",
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIwMTYyNDgsImlhdCI6MTY2OTQyNDI0OCwiaWQiOjEzfQ.LiGZYp_-2-6sWc5fuNEFvkpK_qqulL-KTNOm4CKNgA0"
+}
 ```
 
 ---
