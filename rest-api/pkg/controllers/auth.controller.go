@@ -39,14 +39,14 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	// Now that we verified an associated account exists, attempt to authenticate
 	accountID, err := models.Login(userIdentifier, password)
-	if err != nil {
+	if err != nil || accountID == 0 {
 		w.WriteHeader(http.StatusUnauthorized)
 		w.Write([]byte(`{"message": "Invalid credentials"}`))
 		return
 	}
 
 	// If the account exists and the password is correct, generate a token
-	token := authentication.CreateToken(*accountID)
+	token := authentication.CreateToken(accountID)
 
 	// Return successful login and token
 	w.WriteHeader(http.StatusOK)
