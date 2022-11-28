@@ -53,7 +53,12 @@ Alternatively, you may use ```go run main.go```
 
 
 ## API Endpoints
+
+### [API Documentation Postman](https://documenter.getpostman.com/view/21072555/2s8YsxtqoY)<br>
 Note: More Endpoints will be added.
+<br>
+Below, you will find the response types.
+
 ### Account (Public)
 
 **Get user information**
