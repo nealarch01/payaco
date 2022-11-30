@@ -1,11 +1,11 @@
-# Backend
-
+# Payaco 
+A simple money transfer REST API.
 ### Disclaimer: This is all play/fake money!!
 
 
 # Table of Contents:
 1. [Technology Stack](#techstack)
-2. [Database](#initializing-the-database)
+2. [Initializing the Database](#initializing-the-database)
 3. [Running the RestAPI](#running-the-rest-api)
 4. [API Documentation](#api-endpoints)
 5. [Useful Resources](#useful-resources)
@@ -21,27 +21,28 @@
 ### Additional Information:
 - The server does not use HTTPS
 - The default port (specified in main) is 8001
-- Most endpoints besides "/" will return application/json
+- All endpoints except "/" will return application/json
 
 
 
 ## Initializing the database
 - Create a PostgreSQL instance at any port (this project uses 4323)
-- A shell script ```setup.sh``` was provided and can be found in the database directory. Change the port number to your instance and run it
-	- Note: this shell script uses zsh, if you use bash, modify it.
+- A shell script ```setup.sh``` was provided and can be found in the database directory. Change the port number to your instance and run it. The shell file will create a database named "development", the tables, and populates it with sample data.
+	- Note: this shell script uses zsh, if you use bash, modify the binary.
 
 
 
 ## Running the REST API
-You may use ```go run main.go```. Alternatively, another shell script was provided and compiles the program into an executable and immediately runs the server.
+You may use ```go run main.go``` (assuming you are inside <b>./rest-api</b> directory). 
+Alternatively, another shell script was provided that compiles the program into an executable and immediately runs if successful.
 
 <b>Note:</b> navigate into ```./rest-api/pkg/models/database.go``` and change your connection string if you are using a different port or database name. 
 
 
 ## API Endpoints
 
-### [API Documentation Postman](https://documenter.getpostman.com/view/21072555/2s8YsxtqoY)<br>
-Note: More Endpoints will be added.
+You may find the endpoint documentations at:
+[Payaco API Documentation (Postman)](https://documenter.getpostman.com/view/21072555/2s8YsxtqoY)<br>
 
 
 ## Useful Resources:
