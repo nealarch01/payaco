@@ -12,9 +12,9 @@ func AccountRoutes(router *mux.Router) {
 }
 
 func SecuredAccountRoutes(router *mux.Router) {
-	router.HandleFunc("/data", controllers.GetPrivateAccountData).Methods("GET") // Get private user data by ID
-	router.HandleFunc("/update/password", controllers.UpdatePassword).Methods("POST") 
-	router.HandleFunc("/update/name", controllers.UpdateName).Methods("PUT") // Should it be a PUT or a POST? I think PUT is more appropriate
-	router.HandleFunc("/update/email", controllers.UpdateEmail).Methods("PUT")
-	router.HandleFunc("/update/phone", controllers.UpdatePhone).Methods("PUT")
+	router.HandleFunc("/", controllers.GetPrivateAccountData).Methods("GET") // Get private user data by ID
+	router.HandleFunc("/password", controllers.UpdatePassword).Methods("POST") 
+	router.HandleFunc("/name", controllers.UpdateName).Methods("PUT") // Should it be a PUT or a POST? I think PUT is more appropriate
+	router.HandleFunc("/email", controllers.UpdateEmail).Methods("PUT")
+	router.HandleFunc("/phone", controllers.UpdatePhone).Methods("PUT")
 }
