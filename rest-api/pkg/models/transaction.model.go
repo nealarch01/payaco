@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"context"
 )
 
 /* Transaction Schema
@@ -22,7 +23,7 @@ type Transaction struct {
 
 
 func CreateTransaction(transaction Transaction) (int, error) {
-	db := InitConnection()
+	db := GetConnection()
 
 	if db == nil {
 		return -1, fmt.Errorf("database connection failed")
@@ -43,7 +44,7 @@ func CreateTransaction(transaction Transaction) (int, error) {
 	
 	// Add to the transaction table and fetch the new id
 	var newId int
-	err = db.QueryRow("INSERT INTO transactions (sender, receiver, amount) VALUES ($1, $2, $3) RETURNING id", transaction.Sender, transaction.Receiver, transaction.Amount).Scan(&newId)
+	err = db.QueryRowContext(context.Background(), "INSERT INTO transactions (sender, receiver, amount) VALUES ($1, $2, $3) RETURNING id", transaction.Sender, transaction.Receiver, transaction.Amount).Scan(&newId)
 
 	if err != nil {
 		return -1, err
@@ -55,7 +56,7 @@ func CreateTransaction(transaction Transaction) (int, error) {
 	// If either update fails, rollback the transaction
 	if senderUpdateStatus != nil || receiverUpdateStatus != nil {
 		// Undo the newly created transaction
-		_, _ = db.Exec("DELETE FROM transactions WHERE sender = $1 AND receiver = $2", transaction.Sender, transaction.Receiver)
+		_, _ = db.ExecContext(context.Background(), "DELETE FROM transactions WHERE sender = $1 AND receiver = $2", transaction.Sender, transaction.Receiver)
 		return -1, fmt.Errorf("transaction failed")
 	}
 
@@ -64,12 +65,12 @@ func CreateTransaction(transaction Transaction) (int, error) {
 
 func GetTransactionHistory(userID int) ([]Transaction, error) {
 	var transactions []Transaction = make([]Transaction, 0)
-	db := InitConnection()
+	db := GetConnection()
 
 	if db == nil {
 		return transactions, fmt.Errorf("database connection failed")
 	}
-	rows, err := db.Query("SELECT * FROM transactions WHERE sender = $1", userID)
+	rows, err := db.QueryContext(context.Background(), "SELECT * FROM transactions WHERE sender = $1", userID)
 	if err != nil {
 		return transactions, err
 	}
@@ -88,7 +89,7 @@ func GetTransactionHistory(userID int) ([]Transaction, error) {
 
 
 func Deposit(userID int, amount float64) error {
-	db := InitConnection()
+	db := GetConnection()
 
 	if db == nil {
 		return fmt.Errorf("database connection failed")
@@ -111,7 +112,7 @@ func Deposit(userID int, amount float64) error {
 }
 
 func Withdraw(userID int, amount float64) error {
-	db := InitConnection()
+	db := GetConnection()
 
 	if db == nil {
 		return fmt.Errorf("database connection failed")
