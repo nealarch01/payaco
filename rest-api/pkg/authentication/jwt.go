@@ -1,7 +1,6 @@
 package authentication
 
 import (
-	"context"
 	"fmt"
 	"time"
 
@@ -48,13 +47,13 @@ func ValidateToken(tokenString string) bool {
 	}
 	// Lastly, do a lookup to check if the token is blacklisted
 
-	connection := models.GetConnection()
+	connection := models.InitConnection()
 	if connection == nil {
 		return false
 	}
 
 	var count int = 0
-	connection.QueryRowContext(context.Background(), "SELECT COUNT(*) FROM blacklist WHERE token = $1", tokenString).Scan(&count)
+	connection.QueryRow("SELECT COUNT(*) FROM blacklist WHERE token = $1", tokenString).Scan(&count)
 	return count == 0
 }
 

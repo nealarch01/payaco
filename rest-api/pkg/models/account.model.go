@@ -3,7 +3,6 @@ package models
 import (
 	"fmt"
 	"strings"
-	"context"
 )
 
 /* account table schema
@@ -46,12 +45,12 @@ func (publicAccount *PublicAccount) ToPublicAccount(account Account) {
 
 func GetAccountByID(id int) (Account, error) {
 	var account Account
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return account, fmt.Errorf("database connection failed")
 	}
 
-	err := db.QueryRowContext(context.Background(), "SELECT * FROM account WHERE id = $1", id).Scan(&account.Id, &account.Username, &account.FirstName, &account.LastName, &account.PhoneNumber, &account.Email, &account.Password, &account.Balance)
+	err := db.QueryRow("SELECT * FROM account WHERE id = $1", id).Scan(&account.Id, &account.Username, &account.FirstName, &account.LastName, &account.PhoneNumber, &account.Email, &account.Password, &account.Balance)
 	if err != nil {
 		fmt.Println(err)
 		return account, err
@@ -62,12 +61,12 @@ func GetAccountByID(id int) (Account, error) {
 
 func GetAccountByEmail(email string) (Account, error) {
 	var account Account
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return account, fmt.Errorf("database connection failed")
 	}
 
-	err := db.QueryRowContext(context.Background(), "SELECT * FROM account WHERE email = $1", email).Scan(&account.Id, &account.Username, &account.FirstName, &account.LastName, &account.PhoneNumber, &account.Email, &account.Password, &account.Balance)
+	err := db.QueryRow("SELECT * FROM account WHERE email = $1", email).Scan(&account.Id, &account.Username, &account.FirstName, &account.LastName, &account.PhoneNumber, &account.Email, &account.Password, &account.Balance)
 	if err != nil {
 		fmt.Println(err)
 		return account, err
@@ -78,12 +77,12 @@ func GetAccountByEmail(email string) (Account, error) {
 
 func GetAccountByPhone(phone string) (Account, error) {
 	var account Account
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return account, fmt.Errorf("database connection failed")
 	}
 
-	err := db.QueryRowContext(context.Background(), "SELECT * FROM account WHERE phone_number = $1", phone).Scan(&account.Id, &account.Username, &account.FirstName, &account.LastName, &account.PhoneNumber, &account.Email, &account.Password, &account.Balance)
+	err := db.QueryRow("SELECT * FROM account WHERE phone_number = $1", phone).Scan(&account.Id, &account.Username, &account.FirstName, &account.LastName, &account.PhoneNumber, &account.Email, &account.Password, &account.Balance)
 	if err != nil {
 		fmt.Println(err)
 		return account, err
@@ -94,12 +93,12 @@ func GetAccountByPhone(phone string) (Account, error) {
 
 func GetAccountByUsername(username string) (Account, error) {
 	var account Account
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return account, fmt.Errorf("database connection failed")
 	}
 
-	err := db.QueryRowContext(context.Background(), "SELECT * FROM account WHERE username = $1", username).Scan(&account.Id, &account.Username, &account.FirstName, &account.LastName, &account.PhoneNumber, &account.Email, &account.Password, &account.Balance)
+	err := db.QueryRow("SELECT * FROM account WHERE username = $1", username).Scan(&account.Id, &account.Username, &account.FirstName, &account.LastName, &account.PhoneNumber, &account.Email, &account.Password, &account.Balance)
 	if err != nil {
 		fmt.Println(err)
 		return account, err
@@ -109,13 +108,13 @@ func GetAccountByUsername(username string) (Account, error) {
 }
 
 func AccountsCount() (int, error) {
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return 0, fmt.Errorf("database connection failed")
 	}
 
 	var count int
-	err := db.QueryRowContext(context.Background(), "SELECT COUNT(*) FROM account").Scan(&count)
+	err := db.QueryRow("SELECT COUNT(*) FROM account").Scan(&count)
 	if err != nil {
 		fmt.Println(err)
 		return 0, err
@@ -125,13 +124,13 @@ func AccountsCount() (int, error) {
 }
 
 func SearchUsername(username string) ([]Account, error) {
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return nil, fmt.Errorf("database connection failed")
 	}
 
 	var accounts []Account
-	rows, err := db.QueryContext(context.Background(), "SELECT * FROM account WHERE username LIKE $1", username+"%") // % is wildcard
+	rows, err := db.Query("SELECT * FROM account WHERE username LIKE $1", username+"%") // % is wildcard
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -152,7 +151,7 @@ func SearchUsername(username string) ([]Account, error) {
 }
 
 func CheckAccountExists(userIdentifier string) (bool, error) {
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return false, fmt.Errorf("database connection failed")
 	}
@@ -166,7 +165,7 @@ func CheckAccountExists(userIdentifier string) (bool, error) {
 	}
 
 	var count int
-	err := db.QueryRowContext(context.Background(), queryString, userIdentifier).Scan(&count)
+	err := db.QueryRow(queryString, userIdentifier).Scan(&count)
 	if err != nil {
 		fmt.Println(err)
 		return false, err
@@ -176,13 +175,13 @@ func CheckAccountExists(userIdentifier string) (bool, error) {
 }
 
 func GetBalance(id int) (float64, error) {
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return 0, fmt.Errorf("database connection failed")
 	}
 
 	var balance float64
-	err := db.QueryRowContext(context.Background(), "SELECT balance FROM account WHERE id = $1", id).Scan(&balance)
+	err := db.QueryRow("SELECT balance FROM account WHERE id = $1", id).Scan(&balance)
 	if err != nil {
 		fmt.Println(err)
 		return 0, err
@@ -194,12 +193,12 @@ func GetBalance(id int) (float64, error) {
 // Update Functions
 
 func UpdateBalance(id int, newBalance float64) error {
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return fmt.Errorf("database connection failed")
 	}
 
-	_, err := db.ExecContext(context.Background(), "UPDATE account SET balance = $1 WHERE id = $2", newBalance, id)
+	_, err := db.Exec("UPDATE account SET balance = $1 WHERE id = $2", newBalance, id)
 	if err != nil {
 		fmt.Println(err)
 		return err
@@ -210,12 +209,12 @@ func UpdateBalance(id int, newBalance float64) error {
 
 
 func UpdateEmail(id int, newEmail string) error {
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return fmt.Errorf("database connection failed")
 	}
 
-	_, err := db.ExecContext(context.Background(), "UPDATE account SET email = $1 WHERE id = $2", newEmail, id)
+	_, err := db.Exec("UPDATE account SET email = $1 WHERE id = $2", newEmail, id)
 	if err != nil {
 		return err
 	}
@@ -225,12 +224,12 @@ func UpdateEmail(id int, newEmail string) error {
 
 
 func UpdatePhone(id int, newPhone string) error {
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return fmt.Errorf("database connection failed")
 	}
 
-	_, err := db.ExecContext(context.Background(), "UPDATE account SET phone_number = $1 WHERE id = $2", newPhone, id)
+	_, err := db.Exec("UPDATE account SET phone_number = $1 WHERE id = $2", newPhone, id)
 	if err != nil {
 		return err
 	}
@@ -238,12 +237,12 @@ func UpdatePhone(id int, newPhone string) error {
 }
 
 func UpdatePassword(id int, newPassword string) error {
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return fmt.Errorf("database connection failed")
 	}
 
-	_, err := db.ExecContext(context.Background(), "UPDATE account SET password = $1 WHERE id = $2", newPassword, id)
+	_, err := db.Exec("UPDATE account SET password = $1 WHERE id = $2", newPassword, id)
 	if err != nil {
 		return err
 	}
@@ -252,12 +251,12 @@ func UpdatePassword(id int, newPassword string) error {
 }
 
 func UpdateFirstName(id int, newFirstName string) error {
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return fmt.Errorf("database connection failed")
 	}
 
-	_, err := db.ExecContext(context.Background(), "UPDATE account SET first_name = $1 WHERE id = $2", newFirstName, id)
+	_, err := db.Exec("UPDATE account SET first_name = $1 WHERE id = $2", newFirstName, id)
 	if err != nil {
 		return err
 	}
@@ -266,12 +265,12 @@ func UpdateFirstName(id int, newFirstName string) error {
 }
 
 func UpdateLastName(id int, newLastName string) error {
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return fmt.Errorf("database connection failed")
 	}
 
-	_, err := db.ExecContext(context.Background(), "UPDATE account SET last_name = $1 WHERE id = $2", newLastName, id)
+	_, err := db.Exec("UPDATE account SET last_name = $1 WHERE id = $2", newLastName, id)
 	if err != nil {
 		return err
 	}
@@ -280,12 +279,12 @@ func UpdateLastName(id int, newLastName string) error {
 }
 
 func UpdateName(id int, newFirstName string, newLastName string) error {
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return fmt.Errorf("database connection failed")
 	}
 
-	_, err := db.ExecContext(context.Background(), "UPDATE account SET first_name = $1, last_name = $2 WHERE id = $3", newFirstName, newLastName, id)
+	_, err := db.Exec("UPDATE account SET first_name = $1, last_name = $2 WHERE id = $3", newFirstName, newLastName, id)
 	if err != nil {
 		return err
 	}
@@ -296,7 +295,7 @@ func UpdateName(id int, newFirstName string, newLastName string) error {
 // Authentication functions
 
 func Login(userIdentifier string, password string) (int, error) {
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return 0, fmt.Errorf("database connection failed")
 	}
@@ -310,7 +309,7 @@ func Login(userIdentifier string, password string) (int, error) {
 	}
 
 	var id int = 0
-	err := db.QueryRowContext(context.Background(), queryString, userIdentifier, password).Scan(&id)
+	err := db.QueryRow(queryString, userIdentifier, password).Scan(&id)
 	if err != nil {
 		fmt.Println(err)
 		return 0, err
@@ -320,7 +319,7 @@ func Login(userIdentifier string, password string) (int, error) {
 }
 
 func Register(account Account) (int, error) {
-	db := GetConnection()
+	db := InitConnection()
 	if db == nil {
 		return 0, fmt.Errorf("database connection failed")
 	}
@@ -328,7 +327,7 @@ func Register(account Account) (int, error) {
 	account.Balance = 0
 
 	var id int
-	err := db.QueryRowContext(context.Background(), "INSERT INTO account (username, first_name, last_name, phone_number, email, password, balance) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id", account.Username, account.FirstName, account.LastName, account.PhoneNumber, account.Email, account.Password, account.Balance).Scan(&id)
+	err := db.QueryRow("INSERT INTO account (username, first_name, last_name, phone_number, email, password, balance) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id", account.Username, account.FirstName, account.LastName, account.PhoneNumber, account.Email, account.Password, account.Balance).Scan(&id)
 	if err != nil {
 		fmt.Println(err)
 		return 0, err

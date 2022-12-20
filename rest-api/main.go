@@ -23,7 +23,7 @@ func entryPoint(w http.ResponseWriter, _ *http.Request) {
 
 // Checks if the database is up when the server starts
 func isDatabaseUp() bool {
-	connection := models.GetConnection()
+	connection := models.InitConnection()
 	if connection == nil {
 		return false
 	}
@@ -34,7 +34,6 @@ func isDatabaseUp() bool {
 func main() {
 	portNumber := 8001
 	// connectionStr := "user=nealarchival dbname=banking-app port=4323"
-	models.InitConnection()
 	if isDatabaseUp() {
 		fmt.Println("Database is up")
 	} else {
