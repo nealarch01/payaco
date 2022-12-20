@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/gorilla/mux"
@@ -24,11 +25,7 @@ func entryPoint(w http.ResponseWriter, _ *http.Request) {
 // Checks if the database is up when the server starts
 func isDatabaseUp() bool {
 	connection := models.InitConnection()
-	if connection == nil {
-		return false
-	}
-	connection.Close() // Close the initial connection
-	return true
+	return connection != nil
 }
 
 func main() {
@@ -38,6 +35,7 @@ func main() {
 		fmt.Println("Database is up")
 	} else {
 		fmt.Println("Failed to make a database connection. Terminating program.")
+		os.Exit(1)
 		return
 	}
 
